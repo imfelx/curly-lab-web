@@ -28,5 +28,16 @@ form.addEventListener('submit',e=>{e.preventDefault();const name=new FormData(fo
 document.querySelectorAll('[data-scroll]').forEach(btn=>btn.addEventListener('click',()=>document.querySelector(btn.dataset.scroll).scrollIntoView({behavior:'smooth'})));
 document.querySelector('#year').textContent=new Date().getFullYear();
 
+const plusCta=document.querySelector('#plus-cta');
+document.querySelectorAll('.plan-card').forEach(card=>card.addEventListener('click',()=>{
+  document.querySelectorAll('.plan-card').forEach(item=>item.classList.remove('selected'));
+  card.classList.add('selected');
+  plusCta.textContent=`Comenzar prueba gratis · Plan ${card.dataset.plan}`;
+}));
+
+const backToTop=document.querySelector('#back-to-top');
+window.addEventListener('scroll',()=>backToTop.classList.toggle('visible',window.scrollY>500));
+backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
 const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.13});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
